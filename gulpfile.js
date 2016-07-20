@@ -10,6 +10,14 @@ gulp.task('webserver', function(){
     connect.server();
 });
 
+gulp.task('build-beta', function(){
+    return browserify({entries:'./src/index.jsx', extensions:['.jsx', 'js'], debug:true})
+        .transform('babelify', {presets: ['es2015', 'react']})
+        .bundle()
+        .pipe(source('bundle.min.js'))
+        .pipe(gulp.dest('build'));
+});
+
 gulp.task('build-prod', function(){
     return browserify({entries:'./src/index.jsx', extensions:['.jsx', 'js'], debug:true})
         .transform('babelify', {presets: ['es2015', 'react']})
@@ -20,18 +28,14 @@ gulp.task('build-prod', function(){
         .pipe(gulp.dest('build'));
 });
 
-gulp.task('build-beta', function(){
-    return browserify({entries:'./src/index.jsx', extensions:['.jsx', 'js'], debug:true})
-        .transform('babelify', {presets: ['es2015', 'react']})
-        .bundle()
-        .pipe(source('bundle.min.js'))
-        .pipe(gulp.dest('build'));
-});
-
-gulp.task('watch', function(){
+gulp.task('watch-beta', function(){
     return gulp.watch(['src/**/*.jsx', 'src/**/*.js'], ['build-beta']);
 });
 
-gulp.task('beta', ['webserver', 'build-beta', 'watch']);
-gulp.task('prod', ['webserver', 'build-prod', 'watch']);
+gulp.task('watch-prod', function(){
+    return gulp.watch(['src/**/*.jsx', 'src/**/*.js'], ['build-prod']);
+});
+
+gulp.task('beta', ['webserver', 'build-beta', 'watch-beta']);
+gulp.task('prod', ['webserver', 'build-prod', 'watch-prod']);
 

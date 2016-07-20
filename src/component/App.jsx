@@ -55,8 +55,12 @@ var App = React.createClass({
     },
 
     render(){
+        var myStyle = {
+            textAlign: 'center'
+        };
+
         return (
-            <div>
+            <div style={myStyle}>
                 <br />
                 <input ref="nowText" type="textbox" />
                 {' '} <button onClick={this.addItem}><font size="4"> new item </font></button><br />
