@@ -11,7 +11,7 @@ gulp.task('webserver', function(){
 });
 
 gulp.task('build-prod', function(){
-    return browserify({entries:'./src/index.jsx', extensions:['.jsx'], debug:true})
+    return browserify({entries:'./src/index.jsx', extensions:['.jsx', 'js'], debug:true})
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
         .pipe(source('bundle.min.js'))
@@ -21,7 +21,7 @@ gulp.task('build-prod', function(){
 });
 
 gulp.task('build-beta', function(){
-    return browserify({entries:'./src/index.jsx', extensions:['.jsx'], debug:true})
+    return browserify({entries:'./src/index.jsx', extensions:['.jsx', 'js'], debug:true})
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
         .pipe(source('bundle.min.js'))
@@ -29,7 +29,7 @@ gulp.task('build-beta', function(){
 });
 
 gulp.task('watch', function(){
-    return gulp.watch(['src/*.jsx'], ['build-beta']);
+    return gulp.watch(['src/**/*.jsx', 'src/**/*.js'], ['build-beta']);
 });
 
 gulp.task('beta', ['webserver', 'build-beta', 'watch']);
