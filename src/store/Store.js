@@ -3,9 +3,9 @@ var EventEmitter = require('events').EventEmitter;
 class Store extends EventEmitter {
     constructor(){
         super();
-        this.todoItems = [];
-        this.pendingItems = [];
-        this.finishItems = [];
+        this.todoItems = [123];
+        this.pendingItems = [456];
+        this.finishItems = [789];
     }
 
     getTodoItems(){
