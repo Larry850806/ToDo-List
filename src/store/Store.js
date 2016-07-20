@@ -3,17 +3,22 @@ var EventEmitter = require('events').EventEmitter;
 class Store extends EventEmitter {
     constructor(){
         super();
-        this.todoItems = [123];
-        this.pendingItems = [456];
-        this.finishItems = [789];
+        this.mode = 0;
+        this.todoItems = [];
+        this.doingItems = [];
+        this.finishItems = [];
+    }
+
+    getMode(){
+        return this.mode;
     }
 
     getTodoItems(){
         return this.todoItems;
     }
 
-    getPendingItems(){
-        return this.pendingItems;
+    getDoingItems(){
+        return this.doingItems;
     }
 
     getFinishItems(){
@@ -22,6 +27,35 @@ class Store extends EventEmitter {
 
     addItem(newItem){
         this.todoItems.push(newItem);
+        this.emit('change');
+    }
+
+    removeItem(index){
+        var nowItems = [];
+        var nextItems = [];
+        switch(this.mode){
+            case 0:
+                nowItems = this.todoItems;
+                nextItems = this.doingItems;
+                break;
+            case 1:
+                nowItems = this.doingItems;
+                nextItems = this.finishItems;
+                break;
+            case 2:
+                nowItems = this.finishItems;
+                break;
+            default:
+                nowItems = nextItems =  ['error'];
+        }
+        var item = nowItems[index];
+        nowItems.splice(index, 1);
+        nextItems.push(item);
+        this.emit('change');
+    }
+
+    changeMode(newMode){
+        this.mode = newMode;
         this.emit('change');
     }
 };

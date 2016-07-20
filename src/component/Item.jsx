@@ -2,7 +2,12 @@ import React from 'react';
 
 var Item = React.createClass({
     render: function(){
-        return (<div><font size="6"> {this.props.content} </font></div>);
+        return (
+            <div>
+                <span><font size="6"> {this.props.content} </font></span>
+                <button onClick={this.props.onClick}><font size="6"> V </font></button>
+            </div>
+        );
     }
 });
 

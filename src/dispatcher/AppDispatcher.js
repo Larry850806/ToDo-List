@@ -8,6 +8,12 @@ appDispatcher.register(function(payload){
         case 'new-item':
             Store.addItem(payload.newItem);
             break;
+        case 'remove-item':
+            Store.removeItem(payload.index);
+            break;
+        case 'change-mode':
+            Store.changeMode(payload.newMode);
+            break;
         default:
             console.log('no this action');
     }
