@@ -4,33 +4,24 @@ import Store from '../store/Store';
 import AppDispatcher from '../dispatcher/AppDispatcher';
 
 var App = React.createClass({
-    addItem: function(){
+    addItem(){
+        var nowText = this.refs.nowText.value;
         AppDispatcher.dispatch({
             actionName: 'new-item',
-            newItem: this.state.nowText
+            newItem: nowText
         });
-        this.setState({nowText: ''});
-    },
-
-    textOnChange: function(e){
-        this.setState({nowText: e.target.value});    
-    },
-
-    getInitialState: function(){
-        return {
-            nowText: ''
-        };
+        this.refs.nowText.value = '';
     },
 
     componentDidMount(){
         Store.on('change', () => this.forceUpdate());
     },
 
-    render: function(){
+    render(){
         return (
             <div>
                 <br />
-                <input type="textbox" onChange={this.textOnChange} value={this.state.nowText} />
+                <input ref="nowText" type="textbox" />
                 {' '} <button onClick={this.addItem}><font size="4"> new item </font></button><br />
                 <br />
                 <List items={Store.getTodoItems()} />
