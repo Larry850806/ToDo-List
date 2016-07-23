@@ -1,74 +1,64 @@
 import React from 'react';
 import List from './List';
-import Store from '../store/Store';
-import AppDispatcher from '../dispatcher/AppDispatcher';
 
 var App = React.createClass({
-    addItem(){
-        var nowText = this.refs.nowText.value;
-        AppDispatcher.dispatch({
-            actionName: 'new-item',
-            newItem: nowText
-        });
-        this.refs.nowText.value = '';
-    },
-
-    changeMode(newMode){
-        AppDispatcher.dispatch({
-            actionName: 'change-mode',
-            newMode: newMode
-        });
-    },
-
-    getItems(){
-        switch(Store.getMode()){
-            case 0:
-                return Store.getTodoItems();
-            case 1:
-                return Store.getDoingItems();
-            case 2:
-                return Store.getFinishItems();
-            default:
-                return ["error"];
-        }
-    },
-
-    getName(){
-        switch(Store.getMode()){
-            case 0:
-                return 'To Do';
-            case 1:
-                return 'Doing';
-            case 2:
-                return 'Finish';
-            default:
-                return 'error';
-        }
-    },
-
-    componentDidMount(){
-        Store.on('change', () => this.forceUpdate());
-    },
-
-    componentWillUnmount(){
-        Store.removeListener('change', () => this.forceUpdate());
-    },
-
-    render(){
-        var myStyle = {
-            textAlign: 'center'
+    getInitialState(){
+        return {
+            nowText: '',
+            todoItems: [123, 'a'],
+            doingItems: [456, 'b'],
+            finishItems: [789, 'c']
         };
-
+    },
+    updateNowText(e){
+        this.setState({nowText: e.target.value});
+    },
+    addNewItem(){
+        var text = this.state.nowText;
+        this.setState({nowText: ''});
+        var newTodoItems = this.state.todoItems;
+        newTodoItems.push(text);
+        this.setState({todoItems: newTodoItems});
+    },
+    todo2Doing(index){
+        var newTodoItems = this.state.todoItems;
+        var newDoingItems = this.state.doingItems;
+        var item = this.state.todoItems[index];
+        newTodoItems.splice(index, 1);
+        newDoingItems.push(item);
+        this.setState({todoItems: newTodoItems, doingItems: newDoingItems});
+    },
+    doing2Finish(index){
+        var newDoingItems = this.state.doingItems;
+        var newFinishItems = this.state.finishItems;
+        var item = this.state.doingItems[index];
+        newDoingItems.splice(index, 1);
+        newFinishItems.push(item);
+        this.setState({doingItems: newDoingItems, finishItems: newFinishItems});
+    },
+    finish2None(index){
+        var newFinishItems = this.state.finishItems;
+        newFinishItems.splice(index, 1);
+        this.setState({finishItems: newFinishItems});
+    },
+    render(){
         return (
-            <div style={myStyle}>
+            <div>
                 <br />
-                <input ref="nowText" type="textbox" />
-                {' '} <button onClick={this.addItem}><font size="4"> new item </font></button><br />
+                <input type="textbox" value={this.state.nowText} onChange={this.updateNowText} />
+                <button style={{fontSize: '20px'}} onClick={this.addNewItem}>  new item </button><br />
                 <br />
-                {' '} <button onClick={() => this.changeMode(0)}><font size="4"> To Do </font></button>
-                {' '} <button onClick={() => this.changeMode(1)}><font size="4"> Doing </font></button>
-                {' '} <button onClick={() => this.changeMode(2)}><font size="4"> Finish </font></button>
-                <List name={this.getName()} items={this.getItems()} />
+                <div style={{position: 'relative'}}>
+                    <span style={{position: 'absolute', left: '20px'}}>
+                        <List name="To Do" items={this.state.todoItems} onClick={this.todo2Doing} />
+                    </span>
+                    <span style={{position: 'absolute', left: '220px'}}>
+                        <List name="Doing" items={this.state.doingItems} onClick={this.doing2Finish} />
+                    </span>
+                    <span style={{position: 'absolute', left: '420px'}}>
+                        <List name="Finish" items={this.state.finishItems} onClick={this.finish2None} />
+                    </span>
+                </div>
             </div>
         );
     }
