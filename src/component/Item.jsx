@@ -1,6 +1,11 @@
 import React from 'react';
 
 var Item = React.createClass({
+    shouldComponentUpdate(newProps){
+        if(this.props.content !== newProps.content) return true;
+        if(this.props.onClick.toString() !== newProps.onClick.toString()) return true;
+        return false;
+    },
     render(){
         return (
             <div>
