@@ -10,7 +10,6 @@ var List = React.createClass({
         return false;
     },
     render(){
-        console.log('render list');
         return (
             <div>
                 <font size="10"> {this.props.name} </font>
