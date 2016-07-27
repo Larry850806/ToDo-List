@@ -40,6 +40,14 @@ var App = React.createClass({
         this.setState({finishItems: newFinishItems});
     },
     render(){
+        var listStyle = {
+            verticalAlign: 'top',
+            display: 'inline-block',
+            marginTop: '5px',
+            marginLeft: '60px',
+            marginRight: '60px'
+        };
+
         return (
             <div style={{textAlign: 'center'}}>
                 <AppBar title="To Do List Demo" />
@@ -47,14 +55,14 @@ var App = React.createClass({
                     <TextField value={this.state.nowText} onChange={this.updateNowText} hintText="New Item" />
                     <RaisedButton label="Add Item" secondary={true} onMouseDown={this.addNewItem} style={{margin: '12px'}}/>
                 </div>
-                <div style={{position: 'relative'}}>
-                    <div style={{display: 'inline-block', marginTop: '5px', marginLeft: '30px', marginRight: '30px'}}>
+                <div>
+                    <div style={listStyle}>
                         <List name="To Do" items={this.state.todoItems} onClick={this.todo2Doing} />
                     </div>
-                    <div style={{display: 'inline-block', marginTop: '5px', marginLeft: '30px', marginRight: '30px'}}>
+                    <div style={listStyle}>
                         <List name="Doing" items={this.state.doingItems} onClick={this.doing2Finish} />
                     </div>
-                    <div style={{display: 'inline-block', marginTop: '5px', marginLeft: '30px', marginRight: '30px'}}>
+                    <div style={listStyle}>
                         <List name="Finish" items={this.state.finishItems} onClick={this.finish2None} />
                     </div>
                 </div>
