@@ -9,9 +9,9 @@ var App = React.createClass({
     getInitialState(){
         return {
             nowText: '',
-            todoItems: Immutable.List.of('123', 'a'),
-            doingItems: Immutable.List.of('456', 'b'),
-            finishItems: Immutable.List.of('789', 'c')
+            todoItems: Immutable.List.of(),
+            doingItems: Immutable.List.of(),
+            finishItems: Immutable.List.of()
         };
     },
     updateNowText(e){
@@ -23,7 +23,6 @@ var App = React.createClass({
         this.setState({todoItems: newTodoItems, nowText: ''});
     },
     todo2Doing(index){
-        console.log(index);
         var item = this.state.todoItems.get(index);
         var newTodoItems = this.state.todoItems.delete(index);
         var newDoingItems = this.state.doingItems.push(item);
@@ -34,7 +33,7 @@ var App = React.createClass({
         var newDoingItems = this.state.doingItems.delete(index);
         var newFinishItems = this.state.finishItems.push(item);
         this.setState({doingItems: newDoingItems, finishItems: newFinishItems});
-    },
+   },
     finish2None(index){
         var newFinishItems = this.state.finishItems.delete(index);
         this.setState({finishItems: newFinishItems});
