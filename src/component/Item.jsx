@@ -1,4 +1,5 @@
 import React from 'react';
+import ListItem from 'material-ui/lib/lists/list-item';
 
 var Item = React.createClass({
     shouldComponentUpdate(newProps){
@@ -8,9 +9,8 @@ var Item = React.createClass({
     },
     render(){
         return (
-            <div>
-                <span><font size="6"> {this.props.content} </font></span>
-                <button onClick={this.props.onClick}><font size="6"> v </font></button>
+            <div onClick={this.props.onClick}>
+                <ListItem primaryText={this.props.content} style={{fontSize: '20px'}}/>
             </div>
         );
     }

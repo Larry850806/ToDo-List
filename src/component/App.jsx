@@ -1,6 +1,9 @@
 import React from 'react';
 import Immutable from 'immutable';
 import List from './List';
+import AppBar from 'material-ui/lib/app-bar';
+import RaisedButton from 'material-ui/lib/raised-button';
+import TextField from 'material-ui/lib/text-field';
 
 var App = React.createClass({
     getInitialState(){
@@ -20,6 +23,7 @@ var App = React.createClass({
         this.setState({todoItems: newTodoItems, nowText: ''});
     },
     todo2Doing(index){
+        console.log(index);
         var item = this.state.todoItems.get(index);
         var newTodoItems = this.state.todoItems.delete(index);
         var newDoingItems = this.state.doingItems.push(item);
@@ -37,21 +41,22 @@ var App = React.createClass({
     },
     render(){
         return (
-            <div>
-                <br />
-                <input type="textbox" value={this.state.nowText} onChange={this.updateNowText} />
-                <button style={{fontSize: '20px'}} onClick={this.addNewItem}>  new item </button><br />
-                <br />
+            <div style={{textAlign: 'center'}}>
+                <AppBar title="To Do List Demo" />
+                <div style={{marginTop: '20px'}}>
+                    <TextField value={this.state.nowText} onChange={this.updateNowText} hintText="New Item" />
+                    <RaisedButton label="Add Item" secondary={true} onMouseDown={this.addNewItem} style={{margin: '12px'}}/>
+                </div>
                 <div style={{position: 'relative'}}>
-                    <span style={{position: 'absolute', left: '20px'}}>
+                    <div style={{display: 'inline-block', marginTop: '5px', marginLeft: '30px', marginRight: '30px'}}>
                         <List name="To Do" items={this.state.todoItems} onClick={this.todo2Doing} />
-                    </span>
-                    <span style={{position: 'absolute', left: '220px'}}>
+                    </div>
+                    <div style={{display: 'inline-block', marginTop: '5px', marginLeft: '30px', marginRight: '30px'}}>
                         <List name="Doing" items={this.state.doingItems} onClick={this.doing2Finish} />
-                    </span>
-                    <span style={{position: 'absolute', left: '420px'}}>
+                    </div>
+                    <div style={{display: 'inline-block', marginTop: '5px', marginLeft: '30px', marginRight: '30px'}}>
                         <List name="Finish" items={this.state.finishItems} onClick={this.finish2None} />
-                    </span>
+                    </div>
                 </div>
             </div>
         );
