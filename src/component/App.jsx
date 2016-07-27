@@ -57,7 +57,7 @@ var App = React.createClass({
                 <AppBar title="To Do List Demo" />
                 <div style={{marginTop: '20px'}}>
                     <TextField value={this.state.nowText} onChange={this.updateNowText} hintText={this.state.placeHolder} />
-                    <RaisedButton label="New Item" secondary={true} onMouseDown={this.addNewItem} style={{margin: '12px'}}/>
+                    <RaisedButton label="Add Item" secondary={true} onMouseDown={this.addNewItem} style={{margin: '12px'}}/>
                 </div>
                 <div>
                     <div style={listStyle}>
