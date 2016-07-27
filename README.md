@@ -1,4 +1,4 @@
 # ToDo-List
-A todo list practice using react and flux.
+A todo list practice using React.js
 
-link: https://rawgit.com/Larry850806/ToDo-List/master/index.html
+![link](https://larry850806.github.io/ToDo-List/)
