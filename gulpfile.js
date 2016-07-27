@@ -5,6 +5,7 @@ var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 var uglify = require('gulp-uglify');
 var buffer = require('vinyl-buffer');
+var livereload = require('gulp-livereload');
 
 gulp.task('webserver', function(){
     connect.server();
@@ -20,7 +21,8 @@ gulp.task('build-beta', function(){
             this.emit('end');
         })
         .pipe(source('bundle.min.js'))
-        .pipe(gulp.dest('build'));
+        .pipe(gulp.dest('build'))
+        .pipe(livereload());
 });
 
 gulp.task('build-prod', function(){
@@ -35,14 +37,17 @@ gulp.task('build-prod', function(){
         .pipe(source('bundle.min.js'))
         .pipe(buffer())
         .pipe(uglify())
-        .pipe(gulp.dest('build'));
+        .pipe(gulp.dest('build'))
+        .pipe(livereload());
 });
 
 gulp.task('watch-beta', function(){
+    livereload.listen();
     return gulp.watch(['src/**/*.jsx', 'src/**/*.js'], ['build-beta']);
 });
 
 gulp.task('watch-prod', function(){
+    livereload.listen();
     return gulp.watch(['src/**/*.jsx', 'src/**/*.js'], ['build-prod']);
 });
 
