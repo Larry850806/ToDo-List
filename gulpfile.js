@@ -11,6 +11,7 @@ gulp.task('webserver', function(){
 });
 
 gulp.task('build-beta', function(){
+    process.env.NODE_ENV = undefined;
     return browserify({entries:'./src/index.jsx', extensions:['.jsx', 'js'], debug:true})
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
@@ -23,6 +24,7 @@ gulp.task('build-beta', function(){
 });
 
 gulp.task('build-prod', function(){
+    process.env.NODE_ENV = 'production';
     return browserify({entries:'./src/index.jsx', extensions:['.jsx', 'js'], debug:true})
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
