@@ -14,6 +14,10 @@ gulp.task('build-beta', function(){
     return browserify({entries:'./src/index.jsx', extensions:['.jsx', 'js'], debug:true})
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
+        .on('error', function(err){
+            console.log(err.stack);
+            this.emit('end');
+        })
         .pipe(source('bundle.min.js'))
         .pipe(gulp.dest('build'));
 });
@@ -22,6 +26,10 @@ gulp.task('build-prod', function(){
     return browserify({entries:'./src/index.jsx', extensions:['.jsx', 'js'], debug:true})
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
+        .on('error', function(err){
+            console.log(err.stack);
+            this.emit('end');
+        })
         .pipe(source('bundle.min.js'))
         .pipe(buffer())
         .pipe(uglify())
